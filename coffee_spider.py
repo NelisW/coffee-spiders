@@ -38,15 +38,17 @@ def spider_plot(scores, ax, max_score=.5, markers=5):
 
         ax.plot(xs, ys, zorder=0, **marker_style)
 
+        ## text rotation : if between 90 and 270, it needs to be flipped
+        ##                 and we want to anchor end of word not beginning
         rot = (theta * (180/np.pi))
         va, ha = 'center', 'left'
         label = labels[i]
         if (rot < -90.) and (rot > -270):
             rot += 180
             ha = 'right'
-            label += '  '
+            label += '  ' # append space between marker and text
         else:
-            label = '  ' + label
+            label = '  ' + label # prepend space between marker and text
 
         ax.annotate(label, (x,y), rotation_mode='anchor', rotation=rot, verticalalignment=va, horizontalalignment=ha)
 
@@ -73,7 +75,6 @@ def spider_plot(scores, ax, max_score=.5, markers=5):
     ax.set_ylim(-max_score-.1,max_score+.1)
 
     return ax
-
 
 scores = OrderedDict([
     ('FLORAL', .1),
